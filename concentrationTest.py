@@ -120,7 +120,8 @@ while True:
     LED3.on()
     LED4.on()
 
-    #getting the users info for the tes
+    #getting the users info for the test
+    #Here's where the GUI stuff will go.
     print("Would you like to run a test at 450nm? y/n")                                 #asking about 450nm test
     in450 = input()                                                                     #getting users input if y running 450 test if not ask about 500nm
     if(in450 == "y"):
