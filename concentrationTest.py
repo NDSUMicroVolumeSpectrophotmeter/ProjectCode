@@ -10,10 +10,35 @@ import board
 import busio
 import sys
 import math
+import tkinter as tk
 from gpiozero import LED
 from signal import pause
 
 from adafruit_as726x import AS726x_I2C
+
+#This function will get the Molar Absorbtivity and run test450
+def submit450():
+    try:
+        e = float(entry.get())
+        concentration450 = test450(e)
+        print("You have chosen to test for 450nm")
+        print("The concentration is " + str(concentration450) + " Moles liter")
+    except Exception as e:
+        print(e)
+        
+
+#This function will get the Molar Absorbtivity and run test 500
+def submit500():
+    try:
+        e = float(entry.get())
+        concentration500 = test500(e)
+        print("You have chosen to test for 500nm")
+        print("The concentration is " +str(concentration500)+" Moles/liter")
+    except Exception as e:
+        print(e)
+        print("Please enter a proper value for e")
+
+
 
 #this function does the 450nm test
 def test450(e):
@@ -62,10 +87,7 @@ def test450(e):
 def test500(e):
     averageSolvent = 0
 
-    while(True):
-        solv = input("Solvent: y/n\n")
-        if(solv == 'y'):
-            break
+   
 
     for i in range(5):
         print("testing solvent " + str(i))
@@ -78,8 +100,8 @@ def test500(e):
 
     averageSample = 0
     while(True):
-        solv = input("Sample: y/n\n")
-        if(solv == 'y'):
+        solv1 = input("Sample: y/n\n")
+        if(solv1 == 'y'):
             break
 
     for i in range(5):
@@ -122,33 +144,43 @@ while True:
 
     #getting the users info for the test
     #Here's where the GUI stuff will go.
-    print("Would you like to run a test at 450nm? y/n")                                 #asking about 450nm test
-    in450 = input()                                                                     #getting users input if y running 450 test if not ask about 500nm
-    if(in450 == "y"):
-        while(True):
-            print("What is the Molar Absorptivity of the Sample?")                      #getting the Molar absorbitivity will change once I know these values for sure
-            e = input()                                                                 #taking their input and storing in e
-            try:
-                molarAbsorptivity = float(e)                                            #trying casting input to float otherwise re asking for coefficent
-                concentration450 = test450(molarAbsorptivity)                           #running 450nm test
-                print("The concentraction at 450nm is: " + str(concentration450))       #printing concentration
-                break
-            except:
-                print("Please input a valid Molar Absorbtivity") 
+    window = tk.Tk()
+    label = tk.Label(text="Enter value for e and select test type:")
+    entry = tk.Entry()
+    label.pack()
+    entry.pack()
+    button = tk.Button(text = "450nm", command = submit450, width = 35, height = 40)
+    button.pack(side=tk.LEFT)
+    button2 = tk.Button(text = "500nm", command = submit500, width = 35, height =40)
+    button2.pack(side=tk.LEFT)
+    window.mainloop()
+    #print("Would you like to run a test at 450nm? y/n")                                 #asking about 450nm test
+    #in450 = input()                                                                     #getting users input if y running 450 test if not ask about 500nm
+    #if(in450 == "y"):
+    #    while(True):
+    #        print("What is the Molar Absorptivity of the Sample?")                      #getting the Molar absorbitivity will change once I know these values for sure
+    #        e = input()                                                                 #taking their input and storing in e
+    #        try:
+    #            molarAbsorptivity = float(e)                                            #trying casting input to float otherwise re asking for coefficent
+    #            concentration450 = test450(molarAbsorptivity)                           #running 450nm test
+    #            print("The concentraction at 450nm is: " + str(concentration450))       #printing concentration
+    #            break
+    #        except:
+    #            print("Please input a valid Molar Absorbtivity") 
 
     #running the same as above but for 500nm 
-    print("Would you like to run a test at 500nm? y/n")
-    in500 = input()
-    if(in500 == "y"):
-        while(True):
-            print("What is the Molar Absorptivity of the Sample?")
-            e = input()
-            try:
-                molarAbsorptivity = float(e)
-                concentration500 = test500(molarAbsorptivity)
-                print("The concentraction at 450nm is: " + str(concentration500))
-                break
-            except:
-                print("Please input a valid Molar Absorbtivity")
+    #print("Would you like to run a test at 500nm? y/n")
+    #in500 = input()
+    #if(in500 == "y"):
+    #    while(True):
+    #        print("What is the Molar Absorptivity of the Sample?")
+    #        e = input()
+    #        try:
+    #            molarAbsorptivity = float(e)
+    #            concentration500 = test500(molarAbsorptivity)
+    #            print("The concentraction at 450nm is: " + str(concentration500))
+    #            break
+    #        except:
+    #            print("Please input a valid Molar Absorbtivity")
 
-    time.sleep(1)
+    #time.sleep(1)
